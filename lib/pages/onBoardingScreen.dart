@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ScreenOne extends StatefulWidget {
   const ScreenOne({super.key});
@@ -16,6 +17,7 @@ class _SreenOneState extends State<ScreenOne> {
         body: SafeArea(
             //Stack that will carry all elements of the screen
             child: Stack(
+      alignment: AlignmentDirectional.center,
       children: [
         //load the image
         Image.asset(
@@ -25,85 +27,107 @@ class _SreenOneState extends State<ScreenOne> {
           // make the image cover the entire screen.
           fit: BoxFit.cover,
         ),
+
+        // we'll use a positioned widget to position the Column to the bottom of the stack
         Positioned(
-        //  top: 40,
-          child: Column(
-            children: [
-              const Text(
-                """Welcome to Salvar, the best way to save""",
-                style: TextStyle(
-                    fontSize: 40,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-          
-              // this is the button for signing in with email. It is a container whose child is a
-              // row.
-          
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                decoration: BoxDecoration(
-                  color: Colors.orange,
-                  borderRadius: BorderRadius.circular(10),
+          bottom: 40,
+          left: 0,
+
+          // we'll use a ConstrainedBox to ensure that the column and its context do not go past the screen's width
+          child: ConstrainedBox(
+            constraints:
+                BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  """Welcome to Salvar, the best way to invest""",
+                  style: TextStyle(
+                      fontSize: 40,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
                 ),
-                child: const Row(
+
+                // this is the button for signing in with email. It is a container whose child is a
+                // row.
+
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.email,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Sign in with email",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+
+                // button for signing in with email
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.phone,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Sign in your phone number",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.email,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "Sign in with email",
+                    const Text(
+                      "Don\'t have an account?",
                       style: TextStyle(color: Colors.white),
                     ),
+                    GestureDetector(
+                      onTap: ()=>context.go("/signup"),
+                      child: const Text(
+                        "Sign up",
+                        style: TextStyle(color: Colors.orange),
+                      ),
+                    )
                   ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-          
-          // button for signing in with email
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                decoration: BoxDecoration(
-                  color: Colors.orange,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.phone,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "Sign in your phone number",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              RichText(
-                  text: TextSpan(
-                text: "Don't have an account?",
-                style: TextStyle(color: Colors.white),
-              )),
-            ],
+                )
+              ],
+            ),
           ),
-        )
+        ),
       ],
     )));
   }
