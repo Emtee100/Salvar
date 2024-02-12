@@ -40,12 +40,15 @@ class _SreenOneState extends State<ScreenOne> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  """Welcome to Salvar, the best way to invest""",
-                  style: TextStyle(
-                      fontSize: 40,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: const Text(
+                    """Welcome to Salvar, the best way to invest""",
+                    style: TextStyle(
+                        fontSize: 40,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
 
                 // this is the button for signing in with email. It is a container whose child is a
@@ -116,7 +119,7 @@ class _SreenOneState extends State<ScreenOne> {
                       style: TextStyle(color: Colors.white),
                     ),
                     GestureDetector(
-                      onTap: ()=>context.go("/signup"),
+                      onTap: ()=>context.push("/signup"),
                       child: const Text(
                         "Sign up",
                         style: TextStyle(color: Colors.orange),

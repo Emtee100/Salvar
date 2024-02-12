@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:salvar/components/email_sign_up.dart';
+import 'package:salvar/components/phone_number.dart';
+import 'package:salvar/components/signUpCategory.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -8,46 +11,47 @@ class Signup extends StatefulWidget {
   State<Signup> createState() => _SignupState();
 }
 
-class _SignupState extends State<Signup> {
+class _SignupState extends State<Signup> with TickerProviderStateMixin {
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 2, vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-
-          //title of the page
-          Padding(
-            padding: EdgeInsets.only(top: 30,bottom: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Create your account",
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                ),
-              ],
+    return DefaultTabController(
+      length: 2,
+      initialIndex: 0,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "Create your account",
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          ),
+          bottom: const TabBar(tabs: [
+            Tab(
+              text: "Email Address",
             ),
-          ),
-// welcome text
-          Text(
-            "Welcome to Salvar, let's create your account",
-            style: TextStyle(color: Theme.of(context).colorScheme.inverseSurface),
-          ),
-
-const SizedBox(height: 20,),
-// slider that will switch between email password and phone number
-Container(child: Row(
-  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  children: [
-    const Text("Email Address"),
-    const Text("Phone Number")
-  ],
-),)
-        //UI based on the current option of sign up
-        ],
+            Tab(
+              text: "Phone Number",
+            )
+          ]),
+        ),
+        body: const TabBarView(
+            children: [
+              SingleChildScrollView(child: Signupform()),
+              SingleChildScrollView(child: PhoneSignup())
+            ]),
       ),
-    ));
+    );
   }
 }

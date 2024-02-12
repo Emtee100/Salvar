@@ -9,9 +9,13 @@ class GoRoutes {
   // it is made private to ensure that it is not tampered with from outside the class
   final GoRouter _router = GoRouter(routes: [
     // home page route
-    GoRoute(path: "/",builder: (context,state)=>const ScreenOne()),
+    GoRoute(path: "/",builder: (context,state)=>const ScreenOne(),routes: [
+      GoRoute(path: "signup", builder: (context, state) => const Signup()),
+    ]
+
+    ),
     // signup page route
-    GoRoute(path: "/signup", builder: (context, state) => const Signup()),
+  //  GoRoute(path: "/signup", builder: (context, state) => const Signup()),
 
   ]);
   //getter function that will provide the router variable
