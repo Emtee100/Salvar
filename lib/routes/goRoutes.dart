@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:salvar/pages/onBoardingScreen.dart';
+import 'package:salvar/pages/otp_screen.dart';
 import 'package:salvar/pages/signUpScreen.dart';
 
 // This class consists of all routes and sub routes of the app.
@@ -11,6 +12,7 @@ class GoRoutes {
     // home page route
     GoRoute(path: "/",builder: (context,state)=>const ScreenOne(),routes: [
       GoRoute(path: "signup", builder: (context, state) => const Signup()),
+      GoRoute(path: "otp", builder: (context, state) => const OtpScreen()),
     ]
 
     ),

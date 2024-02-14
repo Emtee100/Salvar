@@ -121,8 +121,8 @@ class _SignupformState extends State<Signupform> {
                     suffixIcon: GestureDetector(
                       onTap: () => changePasswordVisibility(),
                       child: _passwordVisible
-                          ? const Icon(Icons.visibility_off_outlined)
-                          : const Icon(Icons.visibility_outlined),
+                          ? const Icon(Icons.visibility_outlined)
+                          : const Icon(Icons.visibility_off_outlined),
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -155,8 +155,8 @@ class _SignupformState extends State<Signupform> {
                     suffixIcon: GestureDetector(
                       onTap: () => changeconfirmPasswordVisibility(),
                       child: _confirmPasswordVisible
-                          ? const Icon(Icons.visibility_off_outlined)
-                          : const Icon(Icons.visibility_outlined),
+                          ? const Icon(Icons.visibility_outlined)
+                          : const Icon(Icons.visibility_off_outlined),
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
