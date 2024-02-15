@@ -1,4 +1,6 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Signupform extends StatefulWidget {
   const Signupform({super.key});
@@ -11,6 +13,7 @@ class _SignupformState extends State<Signupform> {
   final _formState = GlobalKey<FormState>();
 
   late final TextEditingController _passwordController;
+  late final TextEditingController _phoneNumberController;
   late final TextEditingController _confirmPasswordController;
   late final TextEditingController _fullNameController;
   late final TextEditingController _emailController;
@@ -36,11 +39,25 @@ class _SignupformState extends State<Signupform> {
     });
   }
 
+  Country _selectedCountry = Country(
+      phoneCode: "254",
+      countryCode: "KE",
+      e164Sc: 0,
+      geographic: true,
+      level: 1,
+      name: "Kenya",
+      example: "712345678",
+      displayName: "Kenya",
+      fullExampleWithPlusSign: "+254 712 345 678",
+      displayNameNoCountryCode: "KE",
+      e164Key: "");
+
   @override
   void initState() {
     _passwordController = TextEditingController();
     _confirmPasswordController = TextEditingController();
     _fullNameController = TextEditingController();
+    _phoneNumberController = TextEditingController();
     _emailController = TextEditingController();
     super.initState();
   }
@@ -49,6 +66,7 @@ class _SignupformState extends State<Signupform> {
   void dispose() {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _phoneNumberController.dispose();
     _emailController.dispose();
     _fullNameController.dispose();
     super.dispose();
@@ -103,6 +121,58 @@ class _SignupformState extends State<Signupform> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Enter an Email Address";
+                    } else {
+                      return null;
+                    }
+                  }),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
+              child: TextFormField(
+                  keyboardType: TextInputType.phone,
+                  controller: _phoneNumberController,
+                  decoration: InputDecoration(
+                      prefixIcon: Container(
+                          padding:
+                          const EdgeInsets.only(top: 13, left: 8, right: 8),
+                          child: InkWell(
+                            onTap: () => showCountryPicker(
+                                countryListTheme: CountryListThemeData(
+                                    bottomSheetHeight: MediaQuery.of(context).size.height/2,
+                                    inputDecoration: InputDecoration(
+                                        labelText: "Search",
+                                        hintText: "Search",
+                                        prefixIcon: const Icon(Icons.search),
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(15)
+                                        )
+                                    )
+                                ),
+                                context: context,
+                                showPhoneCode: true,
+                                showSearch: true,
+                                onSelect: (Country value) {
+                                  setState(() {
+                                    _selectedCountry = value;
+                                  });
+                                }),
+                            child: Text(
+                              "${_selectedCountry.flagEmoji} + ${_selectedCountry.phoneCode}",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          )),
+                      labelText: "Phone Number",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      )),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Enter a phone number";
+                    } else if (_phoneNumberController.text.length > 9) {
+                      return "Enter the phone number with the format 712345678";
+                    } else if (_phoneNumberController.text.length < 9) {
+                      return "A phone number should at least have 9 digits";
                     } else {
                       return null;
                     }
@@ -181,7 +251,7 @@ class _SignupformState extends State<Signupform> {
             GestureDetector(
               onTap: () {
                 if (_formState.currentState!.validate()) {
-                  print('Hi');
+                  context.push("/otp");
                 }
               },
               child: Container(

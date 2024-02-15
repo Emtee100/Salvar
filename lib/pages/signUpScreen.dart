@@ -28,30 +28,14 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      initialIndex: 0,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Create your account",
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-          ),
-          bottom: const TabBar(tabs: [
-            Tab(
-              text: "Email Address",
-            ),
-            Tab(
-              text: "Phone Number",
-            )
-          ]),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Create your account",
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
-        body: const TabBarView(
-            children: [
-              SingleChildScrollView(child: Signupform()),
-              SingleChildScrollView(child: PhoneSignup())
-            ]),
       ),
+      body: const SingleChildScrollView(child: Signupform()),
     );
   }
 }
