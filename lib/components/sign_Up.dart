@@ -1,4 +1,5 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,6 +18,10 @@ class _SignupformState extends State<Signupform> {
   late final TextEditingController _confirmPasswordController;
   late final TextEditingController _fullNameController;
   late final TextEditingController _emailController;
+
+  //Firebase auth variable
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   //this variable is set to false and it will be used to control the
   //visibility of the password once the suffix icon is pressed.
   bool _passwordVisible = false;
@@ -72,18 +77,34 @@ class _SignupformState extends State<Signupform> {
     super.dispose();
   }
 
+  //verify Number function
+  sendOtp(String number) async {
+    await _auth.verifyPhoneNumber(
+        phoneNumber: number,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await _auth.signInWithCredential(credential);
+        },
+        verificationFailed: (FirebaseAuthException error) {
+          if (error.code == 'invalid-phone-number') {
+            print(error.code);
+          }
+        },
+        codeSent: (String verificationId, int? resendToken) {},
+        codeAutoRetrievalTimeout: (String verificationId) {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
         key: _formState,
         child: Column(
           children: [
-
-            Padding(
-              padding: const EdgeInsets.only(top: 25),
-              child: const Text("Welcome to Salvar, let's create your account.",style: TextStyle(
-                fontSize: 15
-              ),),
+            const Padding(
+              padding: EdgeInsets.only(top: 25),
+              child: Text(
+                "Welcome to Salvar, let's create your account.",
+                style: TextStyle(fontSize: 15),
+              ),
             ),
             //full name textfield
 
@@ -135,20 +156,19 @@ class _SignupformState extends State<Signupform> {
                   decoration: InputDecoration(
                       prefixIcon: Container(
                           padding:
-                          const EdgeInsets.only(top: 13, left: 8, right: 8),
+                              const EdgeInsets.only(top: 13, left: 8, right: 8),
                           child: InkWell(
                             onTap: () => showCountryPicker(
                                 countryListTheme: CountryListThemeData(
-                                    bottomSheetHeight: MediaQuery.of(context).size.height/2,
+                                    bottomSheetHeight:
+                                        MediaQuery.of(context).size.height / 2,
                                     inputDecoration: InputDecoration(
                                         labelText: "Search",
                                         hintText: "Search",
                                         prefixIcon: const Icon(Icons.search),
                                         border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(15)
-                                        )
-                                    )
-                                ),
+                                            borderRadius:
+                                                BorderRadius.circular(15)))),
                                 context: context,
                                 showPhoneCode: true,
                                 showSearch: true,
@@ -159,7 +179,7 @@ class _SignupformState extends State<Signupform> {
                                 }),
                             child: Text(
                               "${_selectedCountry.flagEmoji} + ${_selectedCountry.phoneCode}",
-                              style: TextStyle(fontSize: 16),
+                              style: const TextStyle(fontSize: 16),
                             ),
                           )),
                       labelText: "Phone Number",
@@ -251,7 +271,9 @@ class _SignupformState extends State<Signupform> {
             GestureDetector(
               onTap: () {
                 if (_formState.currentState!.validate()) {
-                  context.push("/otp");
+                  sendOtp("+${_selectedCountry.phoneCode}" +
+                      " ${_phoneNumberController.text}");
+                  //context.push("/otp");
                 }
               },
               child: Container(
@@ -264,7 +286,8 @@ class _SignupformState extends State<Signupform> {
                     borderRadius: BorderRadius.circular(15)),
                 child: Text(
                   "Create Account",
-                  style: TextStyle(fontWeight: FontWeight.bold,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.onPrimaryContainer),
                 ),
               ),

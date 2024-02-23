@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "974480089343",
+    "project_id": "salvar-app",
+    "storage_bucket": "salvar-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974480089343:android:ac8a382b9f31b8d3df2cca",
+        "android_client_info": {
+          "package_name": "com.example.salvar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFwdnqa9v5fODizMQJc2pFdomFceuSxfg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

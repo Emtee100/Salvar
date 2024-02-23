@@ -38,6 +38,8 @@ dependencies:
   go_router: ^13.1.0
   country_picker: ^2.0.24
   pinput: ^4.0.0
+  firebase_core: ^2.25.4
+  firebase_auth: ^4.17.4
 
 dev_dependencies:
   flutter_test:
