@@ -112,7 +112,7 @@ class _PhoneSignupState extends State<PhoneSignup> {
                             }),
                         child: Text(
                           "${_selectedCountry.flagEmoji} + ${_selectedCountry.phoneCode}",
-                          style: TextStyle(fontSize: 16),
+                          style: const TextStyle(fontSize: 16),
                         ),
                       )),
                   labelText: "Phone Number",

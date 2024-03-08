@@ -10,7 +10,9 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
-  await FirebaseAppCheck.instance.activate(androidProvider: AndroidProvider.playIntegrity);
+  await FirebaseAppCheck.instance.activate(
+    //webProvider: ReCaptchaV3Provider(""),
+    androidProvider: AndroidProvider.debug);
   runApp(const MyApp());
 }
 

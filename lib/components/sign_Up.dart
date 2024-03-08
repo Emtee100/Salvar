@@ -78,9 +78,10 @@ class _SignupformState extends State<Signupform> {
   }
 
   //verify Number function
-  sendOtp(String number) async {
+  void sendOtp(String number) async {
     await _auth.verifyPhoneNumber(
         phoneNumber: number,
+        timeout: const Duration(seconds: 60),
         verificationCompleted: (PhoneAuthCredential credential) async {
           await _auth.signInWithCredential(credential);
         },
@@ -89,7 +90,9 @@ class _SignupformState extends State<Signupform> {
             print(error.code);
           }
         },
-        codeSent: (String verificationId, int? resendToken) {},
+        codeSent: (String verificationId, int? resendToken) {
+          context.go("/otp", extra: verificationId);
+        },
         codeAutoRetrievalTimeout: (String verificationId) {});
   }
 
@@ -273,7 +276,7 @@ class _SignupformState extends State<Signupform> {
                 if (_formState.currentState!.validate()) {
                   sendOtp("+${_selectedCountry.phoneCode}" +
                       " ${_phoneNumberController.text}");
-                  //context.push("/otp");
+                  
                 }
               },
               child: Container(
