@@ -91,7 +91,7 @@ class _SignupformState extends State<Signupform> {
           }
         },
         codeSent: (String verificationId, int? resendToken) {
-          context.go("/otp", extra: verificationId);
+          context.push("/otp", extra: verificationId);
         },
         codeAutoRetrievalTimeout: (String verificationId) {});
   }

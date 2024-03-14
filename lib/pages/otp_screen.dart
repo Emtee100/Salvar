@@ -55,17 +55,20 @@ class _OtpScreenState extends State<OtpScreen> {
           padding: const EdgeInsets.symmetric(vertical: 25),
           child: Form(
             key: _pinputState,
-            child: Pinput(
-              length: 6,
-              androidSmsAutofillMethod: AndroidSmsAutofillMethod.none,
-              validator: (String? input) {
-                if (input == null) {
-                  return "Enter the OTP sent";
-                } else {
-                  return null;
-                }
-              },
-              controller: _pinputController,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Pinput(
+                length: 6,
+                androidSmsAutofillMethod: AndroidSmsAutofillMethod.none,
+                validator: (String? input) {
+                  if (input == null) {
+                    return "Enter the OTP sent";
+                  } else {
+                    return null;
+                  }
+                },
+                controller: _pinputController,
+              ),
             ),
           ),
         ),
@@ -83,8 +86,10 @@ class _OtpScreenState extends State<OtpScreen> {
 
                 // sign in the user
                 await FirebaseAuth.instance.signInWithCredential(credential).then((value){
+                  // first we'll need to pop the otp screen off of the screen
                   context.pop();
-                  //context.pop();
+                  // then we pop the onboarding screen off of the screen
+                  context.pop();
                 });
 
               }
